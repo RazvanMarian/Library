@@ -5,7 +5,7 @@ namespace Library.Application.Abstractions.Services;
 public interface ILibraryService
 {
     bool AddBook(Book book);
-    bool LendBook(Book book, string personId);
+    bool BorrowBook(Book book, string personId);
     bool ReturnBook(BorrowedBook borrowedBook);
 
 

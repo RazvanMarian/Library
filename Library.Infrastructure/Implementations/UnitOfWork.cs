@@ -1,6 +1,6 @@
 ﻿using Library.Application.Abstractions.Repositories;
 
-namespace Library.Infrastructure.Concret;
+namespace Library.Infrastructure.Implementations;
 
 public class UnitOfWork : IUnitOfWork
 {
