@@ -5,20 +5,34 @@ public class BookRepositoryTests
     public BookRepositoryTests()
     {
         bookRepository = new BookRepository();
+        books = new List<Book>()
+        {
+            new Book()
+            {
+                ISBN = "1234",
+                Name = "test book",
+                Author = "test author",
+                Price = 10,
+                Copies = 10,
+                CurrentCopies = 10,
+            },
+            new Book()
+            {
+                ISBN = "12345",
+                Name = "test book 2",
+                Author = "test author 2",
+                Price = 10,
+                Copies = 10,
+                CurrentCopies = 0,
+            },
+        };
     }
 
     [Fact]
     public void AddBookReturnBook()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
 
         //Act
         var response = bookRepository.Add(book);
@@ -31,14 +45,7 @@ public class BookRepositoryTests
     public void AddExistingBookReturnNull()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
 
         //Act
         var response = bookRepository.Add(book);
@@ -53,14 +60,7 @@ public class BookRepositoryTests
     public void UpdateBookReturnUpdatedObject()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
 
         //Act
         var response = bookRepository.Add(book);
@@ -76,14 +76,7 @@ public class BookRepositoryTests
     public void UpdateNonExistingObjectReturnNull()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
 
         //Act
         var response = bookRepository.Update(book);
@@ -96,23 +89,8 @@ public class BookRepositoryTests
     public void GetBookReturnBook()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
-
-        var book2 = new Book()
-        {
-            ISBN = "12345",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
+        var book2 = books[1];
 
         //Act
         bookRepository.Add(book);
@@ -127,23 +105,8 @@ public class BookRepositoryTests
     public void GetNonExistingBookReturnNull()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
-
-        var book2 = new Book()
-        {
-            ISBN = "12345",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
+        var book2 = books[1];
 
         //Act
         bookRepository.Add(book);
@@ -156,5 +119,6 @@ public class BookRepositoryTests
 
     #region private
     private readonly BookRepository bookRepository = null!;
+    private readonly List<Book> books = null!;
     #endregion
 }

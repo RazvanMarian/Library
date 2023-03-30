@@ -1,4 +1,5 @@
 ﻿using ConsoleTables;
+using Library.Application.Abstractions.Services;
 using Library.Dtos;
 using System.ComponentModel.DataAnnotations;
 
@@ -33,10 +34,10 @@ public static class Menu
             return;
         }
 
-        ConsoleTable table = new ConsoleTable("ISBN","Name","Price","Current no. of Copies", "Total no. of Copies");
+        ConsoleTable table = new ConsoleTable("ISBN","Name", "Author", "Price","Current no. of Copies", "Total no. of Copies");
 
         foreach (var book in books)
-            table.AddRow( book.ISBN, book.Name, book.Price, book.CurrentCopies, book.Copies);
+            table.AddRow( book.ISBN, book.Name,book.Author, book.Price, book.CurrentCopies, book.Copies);
 
         table.Write(Format.Alternative);
     }
@@ -49,10 +50,10 @@ public static class Menu
             return;
         }
 
-        ConsoleTable table = new ConsoleTable("ISBN", "Name", "Price");
+        ConsoleTable table = new ConsoleTable("ISBN", "Name", "Author","Price");
 
         foreach (var borrowedBook in borrowedBooks)
-            table.AddRow(borrowedBook.Book.ISBN, borrowedBook.Book.Name, borrowedBook.Book.Price);
+            table.AddRow(borrowedBook.Book.ISBN, borrowedBook.Book.Name,borrowedBook.Book.Author, borrowedBook.Book.Price);
 
         table.Write(Format.Alternative);
     }
@@ -64,6 +65,9 @@ public static class Menu
 
         Console.Write("Enter book ISBN: ");
         var bookISBN = Console.ReadLine()?.Trim();
+
+        Console.Write("Enter book author name: ");
+        var bookAuthor = Console.ReadLine()?.Trim();
 
         Console.Write("Enter rent price: ");
         var price = Console.ReadLine()?.Trim();
@@ -79,6 +83,7 @@ public static class Menu
         {
             Name = bookName ?? string.Empty,
             ISBN = bookISBN ?? string.Empty,
+            Author = bookAuthor ?? string.Empty,
             Price = bookPrice,
             Copies = bookCopies
         };

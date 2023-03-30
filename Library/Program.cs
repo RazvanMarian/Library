@@ -1,6 +1,8 @@
-﻿using Library.Application.Abstractions.Repositories;
+﻿using Library;
+using Library.Application.Abstractions.Repositories;
 using Library.Application.Abstractions.Services;
 using Library.Application.Implementations.Services;
+using Library.Core.Domain;
 using Library.Infrastructure.Implementations;
 using Library.UserInterface;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,8 @@ IHost host = Host.CreateDefaultBuilder().ConfigureServices(
 
 
 var libraryService = host.Services.GetRequiredService<ILibraryService>();
+
+Utils.GenerateSeedBooks(libraryService);
 
 while (true)
 {
@@ -31,6 +35,7 @@ while (true)
                     {
                         Name = book.Name,
                         ISBN = book.ISBN,
+                        Author = book.Author,
                         Price = book.Price,
                         Copies = book.Copies,
                         CurrentCopies = book.Copies

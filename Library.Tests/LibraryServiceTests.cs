@@ -5,20 +5,36 @@ public class LibraryServiceTests
     public LibraryServiceTests() 
     {
         libraryService = new LibraryService(new UnitOfWork());
+
+        books = new List<Book>()
+        {
+            new Book()
+            {
+                ISBN = "1234",
+                Name = "test book",
+                Author = "test author",
+                Price = 10,
+                Copies = 10,
+                CurrentCopies = 10,
+            },
+            new Book()
+            {
+                ISBN = "12345",
+                Name = "test book 2",
+                Author = "test author 2",
+                Price = 10,
+                Copies = 10,
+                CurrentCopies = 0,
+            },
+        };
     }
 
     [Fact]
     public void AddBookReturnTrue()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
+
         //Act
         var response = libraryService.AddBook(book);
 
@@ -30,14 +46,7 @@ public class LibraryServiceTests
     public void AddExistingBookReturnFalse()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
 
         //Act
         var response = libraryService.AddBook(book);
@@ -52,14 +61,7 @@ public class LibraryServiceTests
     public void BorrowBookReturnTrue()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
 
         //Act
@@ -75,14 +77,7 @@ public class LibraryServiceTests
     public void BorrowNonExistingBookReturnFalse()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
         string nonExistingISBN = "123";
 
@@ -99,14 +94,7 @@ public class LibraryServiceTests
     public void BorrowBookThatHasNoCopyLeftReturnFalse()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 0,
-        };
+        var book = books[1];
         string personId = "1234";
 
         //Act
@@ -122,14 +110,7 @@ public class LibraryServiceTests
     public void BorrowBookThatYouAlreadyBorrowedReturnFalse()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
 
         //Act
@@ -167,14 +148,7 @@ public class LibraryServiceTests
     public void ReturnBookReturnTrue()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
 
         //Act
@@ -191,14 +165,7 @@ public class LibraryServiceTests
     public void ReturnNonExistingBookReturnFalse()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
         string nonExistingISBN = "123";
 
@@ -216,14 +183,7 @@ public class LibraryServiceTests
     public void ReturnAlreadyReturnedBookReturnFalse()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
 
         //Act
@@ -242,14 +202,7 @@ public class LibraryServiceTests
     public void ReturnBookYouDidntBorrowReturnFalse()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
         string person2Id = "12345";
 
@@ -267,14 +220,7 @@ public class LibraryServiceTests
     public void ComputeCorrectNumberOfCopies()
     {
         //Arrange
-        var book = new Book()
-        {
-            ISBN = "1234",
-            Name = "test book",
-            Price = 10,
-            Copies = 10,
-            CurrentCopies = 10,
-        };
+        var book = books[0];
         string personId = "1234";
 
         //Act
@@ -288,5 +234,6 @@ public class LibraryServiceTests
 
     #region private
     private readonly LibraryService libraryService = null!;
+    private readonly List<Book> books = null!;
     #endregion 
 }
