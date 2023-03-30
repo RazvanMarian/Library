@@ -8,7 +8,7 @@ public class Repository<TModel> : IRepository<TModel> where TModel : class, IMod
 {
     public virtual TModel? Add(TModel model)
     {
-        if (entities.Contains(model))
+        if (entities.Find(m => m.Key == model.Key) is not null)
         {
             return null;
         }
@@ -19,28 +19,15 @@ public class Repository<TModel> : IRepository<TModel> where TModel : class, IMod
         }
     }
 
-    public virtual TModel? Delete(TModel model)
-    {
-        if (entities.Contains(model))
-        {
-            if (entities.Remove(model))
-                return model;
-            else
-                return null;
-        }
-        else return null;
-    }
-
     public virtual List<TModel> GetAll()
         =>  entities;
    
-
     public virtual TModel? Update(TModel model)
     {
-        if (entities.Contains(model))
+        var entity = entities.Find(m => m.Key == model.Key);
+        if (entity is not null)
         {
-            TModel? temp = entities.Find(m => m.Key == model.Key);
-            temp = model;
+            entity = model;
             return model;
         }
         else
@@ -51,11 +38,6 @@ public class Repository<TModel> : IRepository<TModel> where TModel : class, IMod
 
     public virtual TModel? Get(string key)
         => entities.Find(m => m.Key == key);
-
-    public int Count()
-    {
-        return entities.Count;
-    }
 
     protected List<TModel> entities = new List<TModel>();
 }
