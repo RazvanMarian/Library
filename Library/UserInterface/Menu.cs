@@ -27,7 +27,7 @@ public static class Menu
 
     public static void ShowAllBooks(List<Core.Domain.Book> books)
     {
-        if (books.Count < 0)
+        if (books.Count == 0)
         {
             Console.WriteLine("There is no book available!");
             return;
@@ -43,7 +43,7 @@ public static class Menu
 
     public static void ShowPersonsBorrowedBooks(List<Core.Domain.BorrowedBook> borrowedBooks)
     {
-        if (borrowedBooks.Count < 0)
+        if (borrowedBooks.Count == 0)
         {
             Console.WriteLine("The specified user doesn't have any borrowed book at the moment!");
             return;

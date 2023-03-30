@@ -35,7 +35,7 @@ while (true)
                         Copies = book.Copies,
                         CurrentCopies = book.Copies
                     }) == false)
-                        Console.WriteLine("A book with the specifiec ISBN already exists...");
+                        Console.WriteLine("A book with the specified ISBN already exists...");
                     else
                         Console.WriteLine("The book was succesfully added!");
                 }
@@ -82,7 +82,9 @@ while (true)
                 Console.Write("Enter person's ID: ");
                 var personID = Console.ReadLine()?.Trim() ?? string.Empty;
 
-                Menu.ShowPersonsBorrowedBooks(libraryService.GetPersonsBorrowedBooks(personID));
+                var borrowedBooks = libraryService.GetPersonsBorrowedBooks(personID);
+
+                Menu.ShowPersonsBorrowedBooks(borrowedBooks);
                 break;
             }
         case MenuOption.GET_BOOK_COPIES_NO:
@@ -90,11 +92,21 @@ while (true)
                 Console.Write("Enter book's ISBN: ");
                 var bookISBN = Console.ReadLine()?.Trim() ?? string.Empty;
 
-                if (string.IsNullOrEmpty(bookISBN) || bookISBN.Length <= 3 || bookISBN.Length>= 13)
+                if (string.IsNullOrEmpty(bookISBN) || bookISBN.Length < 3 || bookISBN.Length > 13)
+                {
                     Console.WriteLine("In order to get the number of copies of a book you must enter a valid ISBN");
+                    break;
+                }
+
+                var copiesNo = libraryService.GetBookCopiesCount(bookISBN);
+                if(copiesNo < 0 ) 
+                {
+                    Console.WriteLine("The searched book doesn't exist!");
+                    break;
+                }
 
                 Console.WriteLine($"The number of available copies for the book with the ISBN: {bookISBN}" +
-                    $" is: {libraryService.GetBookCopiesCount(bookISBN)}");
+                    $" is: {copiesNo}");
 
                 break;
             }
